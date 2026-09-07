@@ -5,7 +5,8 @@ import json
 import requests
 import pandas as pd
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+MSK = timezone(timedelta(hours=3))
 
 DATA = Path('/app/data')
 TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
@@ -51,8 +52,6 @@ def reviews_diff():
 
 async def refresh():
     tg('🔄 Обновляю данные: карточки, остатки, отзывы...')
-    if datetime.now().hour == 6:
-        await run('python collectors/comp_discovery.py')
     await run('python collectors/wb_full_collector.py')
     await run('python diff_analyzer.py')
     await run('python collectors/comp_collector.py')
@@ -64,7 +63,7 @@ async def refresh():
             nd = int(json.loads(st_file.read_text()).get('new_drafts', 0))
         except Exception:
             nd = 0
-    parts = [f'✅ Данные обновлены ({datetime.now():%H:%M}).']
+    parts = [f'✅ Данные обновлены ({datetime.now(MSK):%H:%M}).']
     sd = stock_diff()
     if sd:
         parts.append('📦 Изменения остатков:\n' + sd)
@@ -80,7 +79,7 @@ def morning():
     f = DATA / 'events_latest.json'
     events = json.loads(f.read_text()) if f.exists() else []
     icon = {'CRITICAL': '🚨', 'WARNING': '⚠️', 'INFO': 'ℹ️'}
-    lines = [f"📊 Утренний отчёт LOWENGRASS ({datetime.now():%d.%m.%Y})\n"]
+    lines = [f"📊 Утренний отчёт LOWENGRASS ({datetime.now(MSK):%d.%m.%Y})\n"]
     for e in events[:6]:
         lines.append(f"{icon.get(e['type'], '•')} {e['message']}\n")
     low = cards[cards['stock_total'] <= 10]
@@ -93,12 +92,14 @@ async def main():
     st = {'ref': '', 'mor': ''}
     while True:
         await asyncio.sleep(20)
-        n = datetime.now()
+        n = datetime.now(MSK)
         if n.minute < 1 and n.hour % 3 == 0 and st['ref'] != n.strftime('%Y%m%d%H'):
             st['ref'] = n.strftime('%Y%m%d%H')
             await refresh()
-        if n.hour == 9 and n.minute < 1 and st['mor'] != n.strftime('%Y%m%d'):
+        if n.hour == 10 and n.minute < 1 and st['mor'] != n.strftime('%Y%m%d'):
             st['mor'] = n.strftime('%Y%m%d')
+            await run('python collectors/comp_discovery.py')
+            await run('python collectors/comp_collector.py')
             morning()
 
 if __name__ == '__main__':
