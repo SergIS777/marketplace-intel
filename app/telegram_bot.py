@@ -256,6 +256,11 @@ async def send_competitors(m):
     if not sent:
         await m.answer('Конкуренты не найдены.')
 
+@dp.callback_query(F.data == 'comp')
+async def q10(c: CallbackQuery):
+    await send_competitors(c.message)
+    await c.answer()
+
 @dp.message(Command('competitors'))
 async def c10(m: Message): await send_competitors(m)
 
