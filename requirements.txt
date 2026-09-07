@@ -1,0 +1,6 @@
+aiogram>=3.10
+pandas
+requests
+plotly
+streamlit
+pyyaml

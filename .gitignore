@@ -1,0 +1,5 @@
+.env
+data/
+__pycache__/
+*.bak*
+apply_patch*.py
