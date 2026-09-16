@@ -1,4 +1,4 @@
-﻿from typing import List, Dict, Optional
+rom typing import List, Dict, Optional
 
 class MockStoreService:
     def __init__(self):

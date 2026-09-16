@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter
+rom fastapi import APIRouter
 from pydantic import BaseModel
 from typing import List, Optional
 from services.mock_store import mock_store_service
