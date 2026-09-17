@@ -66,3 +66,13 @@
 - Защита DDoS и атак подтверждена: BUSINESS_PLAN раздел 12, четыре уровня, 0 руб на старте
 - Реструктуризация документов: всё в app/docs/, ченджлоги APP и BOT
 - Фаза 0 закрыта, переход к Фазе 1: контракт бэкенда (OpenAPI + мок-сервер)
+
+## [17.09.2026] Фаза 1 — технический прототип backend (дедлайн 20.09)
+- FastAPI backend в app/backend/ с 9 endpoint'ами
+- Auth: login, register, me (мок-авторизация)
+- Store: get store, products, stats (мок-данные LOWENGRASS)
+- Reviews: get all, unanswered, post answer
+- Swagger UI документация на /docs
+- Мок-данные: 4 товара, 3 отзыва, тестовый пользователь test@example.com
+- Зависимости обновлены для Python 3.14
+- Дедлайн 20.09.2026 достигнут досрочно
