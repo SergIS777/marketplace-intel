@@ -7,7 +7,7 @@
 ### Конкуренты (Фаза 3)
 - collectors/comp_collector.py — снапшоты цен/остатков/рейтингов конкурентов (публичный WB v4/detail)
 - collectors/comp_discovery.py — АВТО-поиск конкурентов на каждый наш товар (search API + фильтр бренд/модель); запуск ежедневно в 06:00 планировщиком
-- config/competitors.yaml — авто-генерируемая карта конкурентов с привязкой or_nm к нашему артикулу
+- config/competitors.yaml — авто-генерируемая карта конкурентов с привязкой for_nm к нашему артикулу
 - /competitors + кнопка 🕵️ в меню: группировка по нашему товару, шапка «мы: цена | остаток», флаг «🚨 дешевле нас на N₽», темп продаж конкурента
 - Защита от потери списка: yaml НЕ перезаписывается, если поиск нашёл <80% старого списка
 - Антибот: User-Agent, 3 ретрая, пауза 15 сек между товарами (429 → повтор)
@@ -18,11 +18,11 @@
 - [✍️ Напишу сам] — бот ждёт текст человека, пара сохраняется с source=human: система учится на голосе владельца
 - [⏭ Пропустить] — отзыв помечен обработанным, больше не всплывает
 - data/processed_reviews.csv — реестр обработанных; /drafts показывает только необработанные
-- history/answered_reviews.csv + колонки eview_id, source
+- history/answered_reviews.csv + колонки review_id, source
 
 ### Исправления
 - review_id на WB — строка, а не число (int() ронял /drafts)
-- WB v4/detail: цена в sizes[0].price.product, остатки в sizes[0].stocks[].qty / 	otalQuantity
+- WB v4/detail: цена в sizes[0].price.product, остатки в sizes[0].stocks[].qty / totalQuantity
 - search API 429: ретраи + UA + паузы
 
 ## v2.0 — 06.09.2026, день (честность и экономия)
@@ -43,6 +43,6 @@
 - Коллекторы: карточки (card.wb.ru v4) + отзывы (feedbacks1.wb.ru), CSV-снапшоты
 - diff_analyzer: события (out-of-stock, низкий остаток, негатив)
 - llm_reviewer: Qwen3-30B-A3B (ModelScope), few-shot на 998 ответах бренда
-- 	elegram_bot: 9 команд, одобрение черновиков
+- telegram_bot: 9 команд, одобрение черновиков
 - dashboard: Streamlit + Plotly :8501
 - scheduler: пайплайн каждые 3 часа + утренний отчёт 09:00
