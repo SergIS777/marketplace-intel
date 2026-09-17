@@ -1,4 +1,4 @@
-rom typing import List, Dict, Optional
+﻿from typing import List, Dict, Optional
 
 class MockStoreService:
     def __init__(self):
@@ -26,13 +26,13 @@ class MockStoreService:
                 {"id": "rev_003", "nm_id": 912617526, "rating": 5, "text": "Идеальный стул!", "author": "Елена С.", "date": "2026-09-13T16:45:00Z", "answered": True, "answer": "Спасибо!"}
             ]
         }
-    
+
     def get_store(self, store_id: str) -> Optional[Dict]:
         return self.stores.get(store_id)
-    
+
     def get_products(self, store_id: str) -> List[Dict]:
         return self.products.get(store_id, [])
-    
+
     def get_reviews(self, store_id: str, unanswered_only: bool = False) -> List[Dict]:
         reviews = self.reviews.get(store_id, [])
         if unanswered_only:

@@ -1,4 +1,4 @@
-rom fastapi import FastAPI
+﻿from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api import auth, store, reviews
 
