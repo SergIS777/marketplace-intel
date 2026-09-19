@@ -2,7 +2,7 @@
 import 'dart:io';
 
 class ApiService {
-  static const String baseUrl = 'http://10.187.8.19:8000/api/v1';
+  static const String baseUrl = 'http://localhost:8000/api/v1';
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     final client = HttpClient();
@@ -32,3 +32,4 @@ class ApiService {
     }
   }
 }
+
