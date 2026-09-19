@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import '../services/api_service.dart';
-import 'store_screen.dart';
+import 'main_shell.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => StoreScreen(token: data['access_token'])),
+        MaterialPageRoute(builder: (_) => MainShell(token: data['access_token'])),
       );
     } catch (e) {
       setState(() => _error = 'Не удалось войти. Проверь что backend запущен.');
@@ -93,4 +93,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
 

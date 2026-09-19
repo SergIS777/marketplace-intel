@@ -15,8 +15,14 @@ class MarketplaceIntelApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6C5CE7)),
         useMaterial3: true,
+        navigationBarTheme: NavigationBarThemeData(
+          labelTextStyle: MaterialStatePropertyAll(
+            TextStyle(color: Colors.white.withOpacity(0.72), fontSize: 12),
+          ),
+        ),
       ),
       home: const LoginScreen(),
     );
   }
 }
+
