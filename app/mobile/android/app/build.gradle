@@ -39,18 +39,15 @@ flutter {
     source = "../.."
 }
 
-dependencies {
-    // Принудительно добавляем нужные версии, чтобы они точно попали в граф зависимостей
-    implementation "androidx.window:window:1.3.0"
-    implementation "androidx.window:window-java:1.3.0"
+configurations.configureEach {
+    // ЖЕСТКО вырезаем ЛЮБЫЕ версии androidx.window, которые тащит Flutter или плагины
+    exclude group: 'androidx.window', module: 'window'
+    exclude group: 'androidx.window', module: 'window-java'
 }
 
-// ВАЖНО: Используем configureEach вместо all для ленивой (lazy) настройки.
-// Это гарантирует, что правила применятся ПОСЛЕ того, как Flutter добавит свои зависимости.
-configurations.configureEach {
-    resolutionStrategy {
-        // Жёстко фиксируем версии, отбрасывая транзитивные 1.1.0
-        force "androidx.window:window:1.3.0"
-        force "androidx.window:window-java:1.3.0"
-    }
+dependencies {
+    // Подключаем правильную версию напрямую. 
+    // Так как мы сделали exclude выше, в APK попадет ТОЛЬКО 1.3.0
+    implementation 'androidx.window:window:1.3.0'
+    implementation 'androidx.window:window-java:1.3.0'
 }
