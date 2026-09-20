@@ -2,6 +2,15 @@
 
 Все значимые изменения мобильного приложения и backend API.
 
+## [20.09.2026] Фаза 2 — Android-приложение запускается локально (USB debug)
+- Flutter-проект app/mobile (Android + Web), платформа для MVP Фазы 2
+- Backend доступен с телефона: adb reverse tcp:8000 tcp:8000 + cleartext в AndroidManifest
+- Platform-specific ApiService (web/mobile), base URL localhost:8000 для dev
+- Починен краш старта: NoClassDefFoundError / NoSuchMethodError (WindowMetricsCalculator.getOrCreate)
+- android/app/build.gradle (Groovy, не .kts): dependencies + force androidx.window 1.1.0, lifecycle 2.7.0, core 1.12.0
+- Обновлены gradle-wrapper.properties, gradle.properties, settings.gradle, android/build.gradle
+- Dev-контур: uvicorn (terminal 1) + flutter run (terminal 2) + adb logcat (terminal 3)
+
 ## [17.09.2026] Фаза 1 — технический прототип backend (дедлайн 20.09)
 - FastAPI backend в app/backend/ с 9 endpoint'ами
 - Auth: login, register, me (мок-авторизация)

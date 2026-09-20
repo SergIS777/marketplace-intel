@@ -1,5 +1,6 @@
 allprojects {
     repositories {
+        maven { url 'file:///C:/local-maven' }
         google()
         mavenCentral()
     }
@@ -15,4 +16,15 @@ subprojects {
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
+}
+subprojects {
+    project.configurations.all {
+        resolutionStrategy {
+            force 'androidx.window:window:1.1.0'
+            force 'androidx.window:window-java:1.1.0'
+            force 'androidx.lifecycle:lifecycle-process:2.6.1'
+            force 'androidx.lifecycle:lifecycle-runtime:2.6.1'
+            force 'androidx.lifecycle:lifecycle-common:2.6.1'
+        }
+    }
 }
