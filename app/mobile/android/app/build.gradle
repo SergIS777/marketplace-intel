@@ -40,15 +40,16 @@ flutter {
 }
 
 dependencies {
-    // Явно подключаем версию 1.3.0, чтобы она была доступна для компиляции Kotlin
-    implementation 'androidx.window:window:1.3.0'
-    implementation 'androidx.window:window-java:1.3.0'
-}
-
-// Убираем exclude, используем только force для перезаписи транзитивных зависимостей
-configurations.configureEach {
-    resolutionStrategy {
-        force 'androidx.window:window:1.3.0'
-        force 'androidx.window:window-java:1.3.0'
+    // ЖЕСТКАЯ фиксация версии. strictly запрещает Gradle понижать версию 
+    // даже для транзитивных зависимостей от flutter_embedding.
+    implementation('androidx.window:window') {
+        version {
+            strictly '1.3.0'
+        }
+    }
+    implementation('androidx.window:window-java') {
+        version {
+            strictly '1.3.0'
+        }
     }
 }
