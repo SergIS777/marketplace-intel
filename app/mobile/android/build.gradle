@@ -17,14 +17,24 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+// ГЛОБАЛЬНАЯ фиксация версий для ВСЕХ модулей.
+// Движок Flutter 3.24 вызывает статический WindowMetricsCalculator.getOrCreate(),
+// который появился только в androidx.window 1.2.0+.
+// Версия 1.1.0 давала FATAL EXCEPTION (NoSuchMethodError) при старте.
+// ВАЖНО: нигде в проекте не должно остаться force на 1.1.0 / lifecycle 2.6.1.
 subprojects {
     project.configurations.all {
         resolutionStrategy {
-            force 'androidx.window:window:1.1.0'
-            force 'androidx.window:window-java:1.1.0'
-            force 'androidx.lifecycle:lifecycle-process:2.6.1'
-            force 'androidx.lifecycle:lifecycle-runtime:2.6.1'
-            force 'androidx.lifecycle:lifecycle-common:2.6.1'
+            force 'androidx.window:window:1.3.0'
+            force 'androidx.window:window-java:1.3.0'
+            force 'androidx.lifecycle:lifecycle-process:2.7.0'
+            force 'androidx.lifecycle:lifecycle-runtime:2.7.0'
+            force 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+            force 'androidx.lifecycle:lifecycle-common:2.7.0'
+            force 'androidx.lifecycle:lifecycle-common-java8:2.7.0'
+            force 'androidx.core:core:1.12.0'
+            force 'androidx.core:core-ktx:1.12.0'
         }
     }
 }
