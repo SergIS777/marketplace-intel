@@ -1,4 +1,22 @@
-﻿<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+﻿<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.marketplace_intel">
+
+    <!-- Добавьте этот блок перед тегом <application> -->
+    <queries>
+        <!-- Разрешаем взаимодействие с Microsoft Word -->
+        <package android:name="com.microsoft.office.word" />
+        <!-- Разрешаем взаимодействие с Microsoft Excel -->
+        <package android:name="com.microsoft.office.excel" />
+        <!-- Если вы открываете файлы через Intent, можно также указать типы данных -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+        </intent>
+    </queries>
     <application
         android:label="marketplace_intel"
         android:usesCleartextTraffic="true"

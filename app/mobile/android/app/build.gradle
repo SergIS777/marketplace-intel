@@ -7,7 +7,8 @@ plugins {
 
 android {
     namespace = "com.example.marketplace_intel"
-    compileSdk = flutter.compileSdkVersion
+    // Явно указываем 34, чтобы избежать динамических подтягиваний и варнингов AGP 8.1.0
+    compileSdk = 34 
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -39,15 +40,16 @@ flutter {
 }
 
 dependencies {
-    // Движок Flutter 3.24 вызывает статический WindowMetricsCalculator.getOrCreate(),
-    // который есть только в androidx.window 1.2.0+. Фиксируем 1.3.0.
+    // Принудительно добавляем нужные версии, чтобы они точно попали в граф зависимостей
     implementation "androidx.window:window:1.3.0"
     implementation "androidx.window:window-java:1.3.0"
 }
 
-configurations.all {
+// ВАЖНО: Используем configureEach вместо all для ленивой (lazy) настройки.
+// Это гарантирует, что правила применятся ПОСЛЕ того, как Flutter добавит свои зависимости.
+configurations.configureEach {
     resolutionStrategy {
-        // Жёстко бьём по рукам все транзитивные зависимости, которые тянут 1.1.0
+        // Жёстко фиксируем версии, отбрасывая транзитивные 1.1.0
         force "androidx.window:window:1.3.0"
         force "androidx.window:window-java:1.3.0"
     }
