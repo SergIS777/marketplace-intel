@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import '../services/api_service.dart';
+import '../theme/app_theme.dart';
 import 'main_shell.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -33,42 +34,33 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0E1220),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.rocket_launch, size: 64, color: Color(0xFF6C5CE7)),
+              const Icon(Icons.rocket_launch, size: 64, color: AppColors.primary),
               const SizedBox(height: 16),
-              const Text('Marketplace Intel',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
+              const Text('Marketplace Intel', style: AppText.heroTitle),
               const SizedBox(height: 8),
-              Text('Твоя игра по запуску бизнеса на WB',
-                  style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.6))),
+              const Text('Твоя игра по запуску бизнеса на WB', style: AppText.subtitle),
               const SizedBox(height: 32),
               _field(_email, 'Email', false),
               const SizedBox(height: 12),
               _field(_password, 'Пароль', true),
               if (_error != null) ...[
                 const SizedBox(height: 12),
-                Text(_error!, style: const TextStyle(color: Colors.redAccent)),
+                Text(_error!, style: AppText.error),
               ],
               const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: FilledButton(
-                  onPressed: _loading ? null : _login,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFF6C5CE7),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  ),
-                  child: _loading
-                      ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white))
-                      : const Text('Начать игру', style: TextStyle(fontSize: 16)),
-                ),
+              FilledButton(
+                onPressed: _loading ? null : _login,
+                style: AppButtons.primary(),
+                child: _loading
+                    ? const SizedBox(width: 24, height: 24,
+                        child: CircularProgressIndicator(color: Colors.white))
+                    : const Text('Начать игру'),
               ),
             ],
           ),
@@ -81,17 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextField(
       controller: c,
       obscureText: obscure,
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: AppColors.textPrimary),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.white.withOpacity(0.4)),
-        filled: true,
-        fillColor: const Color(0xFF1A2035),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        hintStyle: TextStyle(color: AppColors.textSecondary.withOpacity(0.6)),
       ),
     );
   }
 }
-
-
