@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
+import 'theme/app_theme.dart';
 
 void main() {
   runApp(const MarketplaceIntelApp());
@@ -12,17 +13,10 @@ class MarketplaceIntelApp extends StatelessWidget {
     return MaterialApp(
       title: 'Marketplace Intel',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6C5CE7)),
-        useMaterial3: true,
-        navigationBarTheme: NavigationBarThemeData(
-          labelTextStyle: MaterialStatePropertyAll(
-            TextStyle(color: Colors.white.withOpacity(0.72), fontSize: 12),
-          ),
-        ),
-      ),
+      theme: AppTheme.dark,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.dark,
       home: const LoginScreen(),
     );
   }
 }
-
