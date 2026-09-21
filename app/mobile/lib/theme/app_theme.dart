@@ -105,8 +105,13 @@ abstract class AppTheme {
         navigationBarTheme: NavigationBarThemeData(
           backgroundColor: AppColors.surfaceNav,
           indicatorColor: AppColors.primarySoft,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: AppColors.textSecondary,
+          iconTheme: WidgetStateProperty.resolveWith((states) {
+            return IconThemeData(
+              color: states.contains(WidgetState.selected)
+                  ? AppColors.primary
+                  : AppColors.textSecondary,
+            );
+          }),
           labelTextStyle: WidgetStateProperty.resolveWith(
             (states) => states.contains(WidgetState.selected)
                 ? AppText.cardSecondary.copyWith(color: AppColors.textPrimary)
