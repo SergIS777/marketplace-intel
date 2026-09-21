@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 
 class Quest {
   final String title;
@@ -38,10 +39,8 @@ class _PathScreenState extends State<PathScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0E1220),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0E1220),
-        title: const Text('Путь продавца', style: TextStyle(color: Colors.white)),
+        title: const Text('Путь продавца'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -58,7 +57,7 @@ class _PathScreenState extends State<PathScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [Color(0xFF6C5CE7), Color(0xFF4834D4)]),
+        gradient: const LinearGradient(colors: [AppColors.primary, Color(0xFF4834D4)]),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -67,8 +66,8 @@ class _PathScreenState extends State<PathScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Уровень $_level', style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-              Text('$_xp XP', style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+              Text('Уровень $_level', style: const TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
+              Text('$_xp XP', style: const TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
             ],
           ),
           const SizedBox(height: 12),
@@ -78,11 +77,11 @@ class _PathScreenState extends State<PathScreen> {
               value: _doneCount / _quests.length,
               minHeight: 10,
               backgroundColor: Colors.white24,
-              valueColor: const AlwaysStoppedAnimation(Color(0xFF00D2A0)),
+              valueColor: const AlwaysStoppedAnimation(AppColors.success),
             ),
           ),
           const SizedBox(height: 8),
-          Text('$_doneCount из ${_quests.length} шагов START', style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 13)),
+          Text('$_doneCount из ${_quests.length} шагов START', style: TextStyle(color: AppColors.textPrimary.withOpacity(0.8), fontSize: 13)),
         ],
       ),
     );
@@ -96,29 +95,29 @@ class _PathScreenState extends State<PathScreen> {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF1A2035),
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
-          border: q.done ? Border.all(color: const Color(0xFF00D2A0)) : null,
+          border: q.done ? Border.all(color: AppColors.success) : null,
         ),
         child: Row(
           children: [
             Icon(q.done ? Icons.check_circle : Icons.radio_button_unchecked,
-                color: q.done ? const Color(0xFF00D2A0) : Colors.white38, size: 28),
+                color: q.done ? AppColors.success : AppColors.textSecondary, size: 28),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(q.title, style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600)),
+                  Text(q.title, style: const TextStyle(color: AppColors.textPrimary, fontSize: 15, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 4),
-                  Text(q.desc, style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 12)),
+                  Text(q.desc, style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
                 ],
               ),
             ),
             Text(
               '+${q.xp} XP',
               style: TextStyle(
-                color: q.done ? Colors.white.withOpacity(0.4) : const Color(0xFF6C5CE7),
+                color: q.done ? AppColors.textSecondary : AppColors.primary,
                 fontSize: 14,
                 fontWeight: q.done ? FontWeight.normal : FontWeight.w600,
               ),

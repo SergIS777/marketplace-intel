@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import '../services/api_service.dart';
+import '../theme/app_theme.dart';
 
 class StoreScreen extends StatefulWidget {
   final String token;
@@ -32,10 +33,8 @@ class _StoreScreenState extends State<StoreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0E1220),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0E1220),
-        title: const Text('Мой магазин', style: TextStyle(color: Colors.white)),
+        title: const Text('Мой магазин'),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -51,7 +50,7 @@ class _StoreScreenState extends State<StoreScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF1A2035),
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -61,10 +60,10 @@ class _StoreScreenState extends State<StoreScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(p['name'],
-                    style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                    style: const TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 6),
                 Text('Остаток: ${p['stock']} шт • Продано за 30 дн: ${p['sales_last_30d']}',
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 13)),
+                    style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
               ],
             ),
           ),
@@ -72,10 +71,10 @@ class _StoreScreenState extends State<StoreScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text('${p['price']} ₽',
-                  style: const TextStyle(color: Color(0xFF00D2A0), fontSize: 16, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(color: AppColors.success, fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 6),
               Text('★ ${p['rating']}',
-                  style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 13)),
+                  style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
             ],
           ),
         ],

@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -6,28 +7,26 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0E1220),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0E1220),
-        title: const Text('Профиль', style: TextStyle(color: Colors.white)),
+        title: const Text('Профиль'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           Container(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(color: const Color(0xFF1A2035), borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16)),
             child: Row(
               children: [
-                const CircleAvatar(radius: 30, backgroundColor: Color(0xFF6C5CE7),
-                    child: Icon(Icons.person, size: 32, color: Colors.white)),
+                CircleAvatar(radius: 30, backgroundColor: AppColors.primary,
+                    child: const Icon(Icons.person, size: 32, color: AppColors.textPrimary)),
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text('Тестовый продавец', style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600)),
-                    SizedBox(height: 4),
-                    Text('test@example.com', style: TextStyle(color: Colors.white54, fontSize: 13)),
+                  children: [
+                    const Text('Тестовый продавец', style: TextStyle(color: AppColors.textPrimary, fontSize: 17, fontWeight: FontWeight.w600)),
+                    const SizedBox(height: 4),
+                    Text('test@example.com', style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
                   ],
                 ),
               ],
@@ -47,12 +46,12 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(color: const Color(0xFF1A2035), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(12)),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFF6C5CE7), size: 20),
+          Icon(icon, color: AppColors.primary, size: 20),
           const SizedBox(width: 12),
-          Text(text, style: const TextStyle(color: Colors.white, fontSize: 14)),
+          Text(text, style: const TextStyle(color: AppColors.textPrimary, fontSize: 14)),
         ],
       ),
     );
