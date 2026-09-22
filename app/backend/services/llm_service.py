@@ -1,4 +1,5 @@
 import os
+import json # ✅ ИСПРАВЛЕНО 1: перенесено наверх
 import requests
 from pathlib import Path
 from typing import List, Dict, Optional
@@ -31,10 +32,6 @@ class LLMService:
         self.use_mock = not self.api_key
     
     def _call_modelscope(self, messages: List[ChatMessage], max_tokens: int = 500, temperature: float = 0.7) -> str:
-        """
-        Общий метод вызова ModelScope API.
-        Возвращает текст ответа или ошибку.
-        """
         if self.use_mock:
             return self._mock_response(messages)
         
@@ -60,19 +57,14 @@ class LLMService:
             return f"Ошибка парсинга ответа LLM: {str(e)}"
     
     def _mock_response(self, messages: List[ChatMessage]) -> str:
-        """Мок-ответ для разработки без токена."""
         last_user_msg = next((m.content for m in reversed(messages) if m.role == "user"), "")
         
         if "доказательство" in last_user_msg.lower() or "выполнил" in last_user_msg.lower():
             return "Отличная работа! Ты успешно выполнил задание. Тренер доволен твоим прогрессом."
         else:
-            return "Это мок-ответ. Для реальных ответов LLM установи MODEL_SCOPE_API_KEY в .env"
+            return "Это мок-ответ. Для реальных ответов LLM установи MODEL_SCOPE_API_KEY_APP в .env"
     
     def check_quest_proof(self, quest_title: str, quest_description: str, proof_text: str) -> Dict:
-        """
-        Проверяет доказательство выполнения квеста через LLM.
-        Возвращает: is_approved, feedback, xp_multiplier (0.0 - 1.0)
-        """
         system_prompt = f"""Ты — AI-тренер для начинающих продавцов на Wildberries.
 Твоя задача: проверить, выполнил ли пользователь задание квеста.
 
@@ -105,7 +97,6 @@ class LLMService:
         
         # Парсим JSON из ответа (с fallback)
         try:
-            import json
             # Ищем JSON в ответе (LLM может добавить текст до/после)
             json_start = response_text.find('{')
             json_end = response_text.rfind('}') + 1
@@ -116,7 +107,7 @@ class LLMService:
                     "feedback": result.get("feedback", "Не удалось разобрать ответ LLM"),
                     "xp_multiplier": float(result.get("xp_multiplier", 0.0))
                 }
-        except (json.JSONDecodeError, ValueError):
+        except Exception:
             pass
         
         # Fallback: если не удалось распарсить JSON
@@ -126,10 +117,7 @@ class LLMService:
             "xp_multiplier": 0.5 if len(proof_text.strip()) > 20 else 0.0
         }
     
-    def chat_with_trainer(self, quest_title: str, quest_description: str, user_message: str, chat_history: List[Dict] = None) -> str:
-        """
-        Диалог с тренером: отвечает на вопросы пользователя по текущему квесту.
-        """
+    def chat_with_trainer(self, quest_title: str, quest_description: str, user_message: str, chat_history: Optional[List[Dict]] = None) -> str: # ✅ ИСПРАВЛЕНО 2: добавлен Optional
         system_prompt = f"""Ты — дружелюбный AI-тренер для начинающих продавцов на Wildberries.
 Ты помогаешь пользователю выполнить текущее задание квеста.
 
