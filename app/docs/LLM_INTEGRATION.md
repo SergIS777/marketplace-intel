@@ -14,3 +14,27 @@
 - **admin permission** — управление аккаунтом (избыточно).
 
 Создаём на https://modelscope.ai/my/settings/token → выбираем **write permission**.
+
+## Модель
+
+### Текущая (прод v3.1 - bot/llm_reviewer.py)
+- ❌ `Qwen/Qwen3-30B-A3B-Instruct-2507` — **УДАЛЕНА из API** (ошибка 400: no provider supported)
+
+### Рекомендуемые для Фазы 3 (проверено 22.09.2026)
+- ✅ `Qwen/Qwen3.5-27B` — **ОСНОВНОЙ ВЫБОР**: новая модель, баланс качество/скорость, 1 Magicube/вызов
+- ✅ `Qwen/Qwen3.8-27B` — альтернатива: ещё новее, та же производительность
+- ✅ `Qwen/Qwen3.5-35B-A3B` — MoE: быстрее (3B активных), дешевле
+
+### Для тестов
+- `Qwen/Qwen3.5-122B-A10B` — большая модель для сложных задач
+- `DeepSeek-V4.1-Flash` — быстрая альтернатива
+
+### Проверка доступных моделей
+```bash
+$headers = @{"Authorization" = "Bearer $env:MODEL_SCOPE_API_KEY"}
+Invoke-RestMethod -Uri "https://api-inference.modelscope.ai/v1/models" -Headers $headers
+
+### Расход (Magicubes)
+Free tier: ~2000 Magicubes при регистрации
+27B модель: ~1 Magicube/вызов
+Итого: ~2000 вызовов = ~400-600 сессий тренера

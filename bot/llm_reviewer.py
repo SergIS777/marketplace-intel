@@ -11,7 +11,7 @@ class LLMReviewer:
         self.data_dir = Path(data_dir)
         self.api_key = os.environ.get('MODEL_SCOPE_API_KEY', '')
         self.api_url = "https://api-inference.modelscope.ai/v1/chat/completions"
-        self.model = "Qwen/Qwen3-30B-A3B-Instruct-2507"
+        self.model = "Qwen/Qwen3.5-27B"
         
         # Загружаем базу знаний (историю ответов)
         history_file = self.data_dir / 'history' / 'answered_reviews.csv'
