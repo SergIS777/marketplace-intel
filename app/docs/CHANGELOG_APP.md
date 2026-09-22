@@ -2,6 +2,16 @@
 
 Все значимые изменения мобильного приложения и backend API.
 
+## [22.09.2026] Фаза 3 — LLM-тренер (бэкенд готов, контракт-first)
+- Создан `app/backend/api/trainer.py`: эндпоинты `/quest/submit` и `/chat`
+- Создан `app/backend/services/llm_service.py`: сервис вызова ModelScope API
+- Модель: Qwen/Qwen3.5-27B (заменила удалённую Qwen3-30B-A3B)
+- Токен: `MODEL_SCOPE_API_KEY_APP` (отдельный от бота, write permission)
+- Загрузка .env через python-dotenv (из корня репозитория)
+- Протестировано в Swagger UI: оба эндпоинта возвращают реальные ответы LLM
+- Контракт-first: схемы Pydantic, мок-данные квестов, логика проверки доказательств
+- Следующий шаг: UI во Flutter (экран квеста с кнопкой "Сдать доказательство" + чат с тренером)
+
 ## [22.09.2026] Фаза 3 — обследование LLM-интеграции (шаг 0)
 - Изучен `bot/llm_reviewer.py`: ModelScope inference на `.ai` домене, токен `ms-...` в .env, модель `Qwen/Qwen3-30B-A3B-Instruct-2507`
 - Паттерн: few-shot топ-3 из history + дедуп по id (0 токенов в тихий день)
