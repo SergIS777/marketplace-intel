@@ -6,3 +6,11 @@
 - Паттерн (прод в bot/llm_reviewer.py): few-shot топ-3 из history + дедуп по id (0 токенов в тихий день)
 - Проверка токена: bot/test_modelscope.py
 - Фаза 3: бэкенд переиспользует паттерн в services/llm_trainer.py; без токена — mock-режим
+
+### Типы токенов ModelScope
+- **read-only permission** — только чтение из hub (модели, датасеты). НЕ подходит для inference API.
+- **write permission** — для API-вызовов включая inference. **ЭТО НУЖНО.**
+- **fine-grained permission** — детальные ограничения (избыточно для нас).
+- **admin permission** — управление аккаунтом (избыточно).
+
+Создаём на https://modelscope.ai/my/settings/token → выбираем **write permission**.
