@@ -8,7 +8,7 @@ url = "https://api-inference.modelscope.ai/v1/chat/completions"
 headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
 payload = {
-    "model": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+    "model": "Qwen/Qwen3.5-27B",
     "messages": [
         {"role": "user", "content": "Отзыв: Пароочиститель мощный, отлично чистит! Напиши короткий вежливый ответ от бренда LOWENGRASS."}
     ],
