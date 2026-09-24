@@ -57,7 +57,7 @@ class _PathScreenState extends State<PathScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [AppColors.primary, Color(0xFF4834D4)]),
+        gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
