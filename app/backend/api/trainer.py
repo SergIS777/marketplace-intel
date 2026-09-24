@@ -48,27 +48,40 @@ async def submit_quest_proof(request: QuestSubmitRequest):
     if not quest:
         raise HTTPException(status_code=404, detail="Квест не найден")
 
-    # ВЫЗОВ LLM-СЕРВИСА (вместо мок-логики)
-    llm_result = llm_service.check_quest_proof(
-        quest_title=quest["title"],
-        quest_description=quest["description"],
-        proof_text=request.proof_text
-    )
-    
-    # Начисляем XP пропорционально оценке LLM
-    xp_awarded = int(quest["xp"] * llm_result["xp_multiplier"])
-    
-    # Определяем, переходить ли к следующему квесту
-    is_approved = llm_result["is_approved"] and xp_awarded > 0
-    next_quest_id = quest["next"] if is_approved else request.quest_id
-    
-    return QuestSubmitResponse(
-        is_approved=is_approved,
-        feedback=llm_result["feedback"],
-        xp_awarded=xp_awarded,
-        next_quest_id=next_quest_id,
-        level_up=False  # В Фазе 3 здесь будет реальная проверка уровня
-    )
+    try:
+        # ВЫЗОВ LLM-СЕРВИСА
+        llm_result = llm_service.check_quest_proof(
+            quest_title=quest["title"],
+            quest_description=quest["description"],
+            proof_text=request.proof_text
+        )
+        
+        # Начисляем XP пропорционально оценке LLM
+        xp_awarded = int(quest["xp"] * llm_result.get("xp_multiplier", 0.0))
+        
+        # Определяем, переходить ли к следующему квесту
+        is_approved = llm_result.get("is_approved", False) and xp_awarded > 0
+        next_quest_id = quest["next"] if is_approved else request.quest_id
+        
+        return QuestSubmitResponse(
+            is_approved=is_approved,
+            feedback=llm_result.get("feedback", "Задание выполнено"),
+            xp_awarded=xp_awarded,
+            next_quest_id=next_quest_id,
+            level_up=False
+        )
+    except Exception as e:
+        # Если LLM упал или вернул мусор — fallback на простую проверку
+        print(f"[trainer] LLM error: {str(e)}")
+        is_valid = len(request.proof_text.strip()) > 20
+        
+        return QuestSubmitResponse(
+            is_approved=is_valid,
+            feedback="LLM временно недоступен. Доказательство принято по формальной проверке." if is_valid else "Доказательство слишком короткое. Минимум 20 символов.",
+            xp_awarded=quest["xp"] if is_valid else 0,
+            next_quest_id=quest["next"] if is_valid else request.quest_id,
+            level_up=False
+        )
 
 @router.post("/chat", response_model=ChatResponse, tags=["trainer"])
 async def trainer_chat(request: ChatRequest):

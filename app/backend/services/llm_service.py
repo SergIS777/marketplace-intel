@@ -25,7 +25,7 @@ class LLMService:
         self.api_key = os.environ.get('MODEL_SCOPE_API_KEY_APP', '')
         self.api_url = "https://api-inference.modelscope.ai/v1/chat/completions"
         self.model = "Qwen/Qwen3.5-27B"
-        self.timeout = 30
+        self.timeout = 120  # 2 минуты вместо 30 секунд
         
         print(f"[LLMService] api_key loaded: {'YES' if self.api_key else 'NO'} (len={len(self.api_key)})\n")
         
@@ -93,7 +93,9 @@ class LLMService:
             ChatMessage(role="user", content=user_message)
         ]
         
-        response_text = self._call_modelscope(messages, max_tokens=300, temperature=0.3)
+        response_text = self._call_modelscope(messages, max_tokens=150, temperature=0.3)
+        
+        print(f"[LLMService] Raw response: {response_text[:200]}")  # Отладка
         
         # Парсим JSON из ответа (с fallback)
         try:
@@ -101,19 +103,30 @@ class LLMService:
             json_start = response_text.find('{')
             json_end = response_text.rfind('}') + 1
             if json_start >= 0 and json_end > json_start:
-                result = json.loads(response_text[json_start:json_end])
+                json_str = response_text[json_start:json_end]
+                result = json.loads(json_str)
+                
+                # Валидация полей
+                if "is_approved" not in result:
+                    result["is_approved"] = False
+                if "feedback" not in result:
+                    result["feedback"] = "Ответ получен, но без обратной связи"
+                if "xp_multiplier" not in result:
+                    result["xp_multiplier"] = 0.5
+                
                 return {
-                    "is_approved": result.get("is_approved", False),
-                    "feedback": result.get("feedback", "Не удалось разобрать ответ LLM"),
-                    "xp_multiplier": float(result.get("xp_multiplier", 0.0))
+                    "is_approved": bool(result["is_approved"]),
+                    "feedback": str(result["feedback"]),
+                    "xp_multiplier": float(result["xp_multiplier"])
                 }
-        except Exception:
+        except Exception as e:
+            print(f"[LLMService] JSON parse error: {str(e)}")
             pass
         
         # Fallback: если не удалось распарсить JSON
         return {
             "is_approved": len(proof_text.strip()) > 20,
-            "feedback": response_text[:200],
+            "feedback": f"LLM ответил, но не в формате JSON: {response_text[:100]}",
             "xp_multiplier": 0.5 if len(proof_text.strip()) > 20 else 0.0
         }
     
