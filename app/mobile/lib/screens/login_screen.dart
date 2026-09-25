@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'tariff_selection_screen.dart';
 import '../services/api_service.dart';
 import '../theme/app_theme.dart';
 import 'main_shell.dart';
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => MainShell(token: data['access_token'])),
+        MaterialPageRoute(builder: (_) => TariffSelectionScreen(token: data['access_token'])),
       );
     } catch (e) {
       setState(() => _error = 'Не удалось войти. Проверь что backend запущен.');

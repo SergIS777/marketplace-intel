@@ -5,7 +5,8 @@ import 'profile_screen.dart';
 
 class MainShell extends StatefulWidget {
   final String token;
-  const MainShell({super.key, required this.token});
+  final String tariff;
+  const MainShell({super.key, required this.token, required this.tariff});
   @override
   State<MainShell> createState() => _MainShellState();
 }
