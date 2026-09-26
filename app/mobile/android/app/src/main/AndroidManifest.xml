@@ -18,10 +18,11 @@
         </intent>
     </queries>
     <application
-        android:label="marketplace_intel"
+        android:label="MY MARKET W"
         android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        android:roundIcon="@null"
         <activity
             android:name=".MainActivity"
             android:exported="true"
