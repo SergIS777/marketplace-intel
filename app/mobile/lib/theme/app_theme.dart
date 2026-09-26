@@ -16,6 +16,37 @@ abstract class AppColors {
 
   static const Color textPrimary = Color(0xFFF5F7FA);
   static const Color textSecondary = Color(0xFF8A94A6);
+
+  // ============================================
+  // ЭКРАН ВХОДА (login_screen.dart)
+  // ============================================
+  static const Color loginBgStart = Color(0xFF5B21B6); // Глубокий фиолетовый
+  static const Color loginBgMid = Color(0xFF6D28D9);   // Фиолетовый Wildberries
+  static const Color loginBgEnd = Color(0xFF4C1D95);   // Тёмный фиолетовый
+  static const Color loginButton = Color(0xFFE6A817);  // Золотая кнопка "Войти"
+
+  // ============================================
+  // ЭКРАН ТАРИФОВ (tariff_selection_screen.dart)
+  // ============================================
+  // START (Бронза)
+  static const Color startBronzeLight = Color(0xFFFFD700);
+  static const Color startBronzeMid = Color(0xFFE6A817);
+  static const Color startBronzeDark = Color(0xFFCD7F32);
+  
+  // PRO (Серебро)
+  static const Color proSilverLight = Color(0xFFFFFFFF);
+  static const Color proSilverMid = Color(0xFFE8E8E8);
+  static const Color proSilverDark = Color(0xFFC0C0C0);
+  
+  // MAX (Золото)
+  static const Color maxGoldLight = Color(0xFFFFF700);
+  static const Color maxGoldMid = Color(0xFFFFD700);
+  static const Color maxGoldDark = Color(0xFFFFA500);
+
+  // ============================================
+  // ПУТЬ ПРОДАВЦА (path_screen.dart)
+  // ============================================
+  static const Color trainerFAB = Color(0xFF00E5FF); // Неоновая голубая кнопка тренера
 }
 
 abstract class AppRadii {
@@ -129,4 +160,34 @@ abstract class AppTheme {
           ),
         ),
       );
+}
+
+// ============================================
+// ГРАДИЕНТЫ (AppGradients)
+// ============================================
+class AppGradients {
+  static const LinearGradient loginBackground = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [AppColors.loginBgStart, AppColors.loginBgMid, AppColors.loginBgEnd],
+  );
+
+  static const LinearGradient tariffStart = LinearGradient(
+    colors: [AppColors.startBronzeLight, AppColors.startBronzeMid, AppColors.startBronzeDark],
+    stops: [0.0, 0.5, 1.0],
+  );
+
+  static const LinearGradient tariffPro = LinearGradient(
+    colors: [AppColors.proSilverLight, AppColors.proSilverMid, AppColors.proSilverDark],
+    stops: [0.0, 0.5, 1.0],
+  );
+
+  static const LinearGradient tariffMax = LinearGradient(
+    colors: [AppColors.maxGoldLight, AppColors.maxGoldMid, AppColors.maxGoldDark],
+    stops: [0.0, 0.5, 1.0],
+  );
+  
+  static const LinearGradient goldAccent = LinearGradient(
+    colors: [AppColors.startBronzeLight, AppColors.startBronzeMid],
+  );
 }
